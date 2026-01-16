@@ -80,7 +80,7 @@ Given our graph, it doesn't seem like we'll have a significant Pearson r.
 But why not double check!
 
 ```{r cor_star}
-dino_data %>%
+star_data %>%
   summarize(r = cor(x, y))
 ```
 There may be a non-linear relationship here; the points seem to diverge in a meaningful
@@ -89,21 +89,40 @@ way (away from the center), but the pearson r cannot specify this (as it mostly 
 
 ### Exercise 4
 
-Add your code and narrative to complete this exercise. Use the conventions from the previous exercises to name your chunks and organize your work.
+As you'll see below, the circle data shares a similar correlation to that of the dino's, despite the fact that they present very differently visually. 
 
-```{r}
+```{r plot_circle}
+circle_data <- datasaurus_dozen %>%
+  filter(dataset == "circle")
 
+ggplot(data = circle_data, mapping = aes(x = x, y = y)) +
+  geom_point()
 ```
 
-```{r}
-
+```{r cor_circle}
+circle_data %>%
+  summarize(r = cor(x, y))
 ```
 
 ### Exercise 5
 
-This is your final exercise! Add code and narrative as needed. Be creative and show off what you’ve learned so far.
-Add code and narrative as needed.
+As you'll see below, these graphs are wonderful to look at. Though they may seem so different from one another, they share very similar correlation coefficients. How fun!
 
-To add additional R chunks, you can either type the backticks, curly braces, and the letter `r`, or use the "Insert Chunk" button above (the green C+ icon). Have fun!
+```{r plot_all}
+ggplot(datasaurus_dozen, aes(x = x, y = y, color = dataset)) +
+  geom_point() +
+  facet_wrap(~dataset, ncol = 3) +
+  theme(legend.position = "none")
+```
+
+
+```{r cor_summary}
+datasaurus_dozen %>%
+  group_by(dataset) %>%
+  summarize(r = cor(x, y)) %>%
+  print(13)
+
+```
+
 
 
