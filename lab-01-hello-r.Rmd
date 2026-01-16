@@ -61,26 +61,30 @@ Next, let's calculate the correlation between `x` and `y` in this dataset:
 dino_data %>%
   summarize(r = cor(x, y))
 ```
-Once you’ve cleaned up the text, add your own explanation or observations here!
+Seems like there is no significant relationship between x and y! 
+And yet...the visuals tell a different story :-)
 
 
 ### Exercise 3
 
-This is your turn to write the code and narrative for the star dataset. Follow the same steps as above to complete the analysis. Don't forget to label your chunks appropriately!
+```{r plot_star}
+star_data <- datasaurus_dozen %>%
+  filter(dataset == "star")
 
-Note that the R chunks are labeled with `plot-star` and `cor-star` to provide spaces to place the code for plotting and calculating the correlation coefficient.
-To finish, clean up the narrative by removing these instructions.
-
-```{r plot-star}
-
-```
-
-I'm some filler text, you should replace me with more meaningful text...
-
-```{r cor-star}
+ggplot(data = star_data, mapping = aes(x = x, y = y)) +
+  geom_point()
 
 ```
-Add your explanation here—what did you notice?
+
+Given our graph, it doesn't seem like we'll have a significant Pearson r.
+But why not double check!
+
+```{r cor_star}
+dino_data %>%
+  summarize(r = cor(x, y))
+```
+There may be a non-linear relationship here; the points seem to diverge in a meaningful
+way (away from the center), but the pearson r cannot specify this (as it mostly checks for linear relationships). 
 
 
 ### Exercise 4
